@@ -35,6 +35,9 @@ console.log(testLabels);
 features = tf.tensor(features)
 labels = tf.tensor(labels)
 
-const result = knn(features, labels, tf.tensor(testFeatures[0]), 10)
+testFeatures.forEach((testPoint, i) => {
+	const result = knn(features, labels, tf.tensor(testPoint), 10)
+	console.log('Guess', result, 'supposed to be:', testLabels[i][0], 'error rate far %:', getErrorRate(testLabels[i][0], result))
+})
 
-console.log('Guess', result, 'supposed to be:', testLabels[0][0], 'error rate far %:', getErrorRate(testLabels[0][0], result))
+

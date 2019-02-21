@@ -6,13 +6,13 @@ const LinearRegression = require('./linear-regression')
 let { features, labels, testFeatures, testLabels } = loadCSV('./cars.csv', {
   shuffle: true,
   splitTest: 50,
-  dataColumns: ['horsepower'],
+  dataColumns: ['horsepower', 'displacement', 'weight'],
   labelColumns: ['mpg']
 })
 
 const regression = new LinearRegression(features, labels, {
-  learningRate: 0.0001,
-  iterations: 100,
+  learningRate: 0.000001,
+  iterations: 1000,
 })
 
 regression.train()

@@ -12,7 +12,7 @@ class LinearRegression {
 
     this.options = Object.assign({ learningRate: 0.1, iterations: 1000 }, options)
   }
-  
+
   /*gradientDescent() {
     const currentGuessesForMPG = this.features.map(row => (this.m * row[0]) + this.b)
     const bSlope = _.sum(currentGuessesForMPG.map((guess, index) => guess - this.labels[index][0])) * 2 / this.features.length
@@ -36,6 +36,25 @@ class LinearRegression {
     for(let i = 0; i < this.options.iterations; i++) {
       this.gradientDescent()
     }
+  }
+
+  test(testFeatures, testLabels) {
+    testFeatures = tf.tensor(testFeatures)
+    testLabels = tf.tensor(testLabels)
+    testFeatures = tf.ones([ testFeatures.shape[0], 1 ]).concat(testFeatures, 1)
+    const predictions = testFeatures.matMul(this.weights)
+    
+    const SSRes = testLabels.sub(predictions)
+      .pow(2)
+      .sum()
+      .get()
+      
+    const SSTot = testLabels.sub(testLabels.mean())
+      .pow(2)
+      .sum()
+      .get()
+
+    return 1 - SSRes / SSTot
   }
 }
 
